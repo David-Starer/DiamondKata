@@ -7,9 +7,9 @@ using System.Text;
 
 namespace DiamondKata
 {
-    static class Program
+    private static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             
             ConsoleKeyInfo key;
