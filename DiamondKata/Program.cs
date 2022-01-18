@@ -11,7 +11,6 @@ namespace DiamondKata
     {
         private static void Main()
         {
-            
             ConsoleKeyInfo key;
             bool isValidKey;
 
