@@ -13,37 +13,19 @@ namespace DiamondKataTests
         private List<string> diamondA;
         private List<string> diamondC;
         private List<string> diamondE;
+        private List<string> diamondZ;
         private DiamondGenerator sut;
+        private ExpectedDiamondSetup expectedDiamondSetup;
 
         [SetUp]
         public void Setup()
         {
-            diamondA = new()
-            {
-                "A"
-            };
-
-            diamondC = new()
-            {
-                "  A  ",
-                " B B ",
-                "C   C",
-                " B B ",
-                "  A  "
-            };
-            diamondE = new()
-            {
-                "    A    ",
-                "   B B   ",
-                "  C   C  ",
-                " D     D ",
-                "E       E",
-                " D     D ",
-                "  C   C  ",
-                "   B B   ",
-                "    A    "
-            };
-
+            expectedDiamondSetup = new ExpectedDiamondSetup();
+            diamondA = expectedDiamondSetup.GetDiamondA();
+            diamondC = expectedDiamondSetup.GetDiamondC();
+            diamondE = expectedDiamondSetup.GetDiamondE();
+            diamondZ = expectedDiamondSetup.GetDiamondZ();
+            
             var consoleReader = new ConsoleReader();
             sut = new DiamondGenerator(consoleReader);
         }
@@ -147,6 +129,18 @@ namespace DiamondKataTests
 
             // Assert
             result.Should().BeEquivalentTo(diamondE);
+        }
+
+        [Test]
+        public void GenerateReturns_Correct_List_Of_Strings_When_Z_Entered()
+        {
+            // Arrange
+
+            // Act
+            var result = sut.Generate('Z');
+
+            // Assert
+            result.Should().BeEquivalentTo(diamondZ);
         }
 
         [Test]
