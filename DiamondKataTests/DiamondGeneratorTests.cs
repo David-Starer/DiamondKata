@@ -152,15 +152,16 @@ namespace DiamondKataTests
         [Test]
         [TestCase('!', null)]
         [TestCase('X', 'X')]
-        public void GetSelectedCharacter_Returns_Correct_Value_Depending_Whether_Alpha_Key_Pressed(char selectedChar, char? expectedResult )
+        [TestCase('x', 'x')]
+        public void GetSelectedCharacter_Returns_Char_When_Alpha_Key_Pressed_Else_Null(char selectedChar, char? expectedResult )
         {
             // Arrange
             var mockConsoleReader = new Mock<IConsoleReader>();
             mockConsoleReader.Setup(x => x.ReadKey()).Returns(selectedChar);
-            var sut = new DiamondGenerator(mockConsoleReader.Object);
+            var diamondGenerator = new DiamondGenerator(mockConsoleReader.Object);
 
             // Act
-            var result = sut.GetSelectedCharacter();
+            var result = diamondGenerator.GetSelectedCharacter();
 
             // Assert
             result.Should().Be(expectedResult);
