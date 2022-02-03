@@ -2,9 +2,9 @@
 
 namespace DiamondKataTests
 {
-    public class ExpectedDiamondSetup
+    public static class TestDataSetup
     {
-        public List<string> GetDiamondA()
+        public static List<string> GetDiamondA()
         {
             return new()
             {
@@ -12,7 +12,7 @@ namespace DiamondKataTests
             };
         }
 
-        public List<string> GetDiamondC()
+        public static List<string> GetDiamondC()
         {
             return new()
             {
@@ -24,7 +24,7 @@ namespace DiamondKataTests
             };
         }
 
-        public List<string> GetDiamondE()
+        public static List<string> GetDiamondE()
         {
             return new()
             {
@@ -40,7 +40,7 @@ namespace DiamondKataTests
             };
         }
 
-        public List<string> GetDiamondZ()
+        public static List<string> GetDiamondZ()
         {
             return new()
             {

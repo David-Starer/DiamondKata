@@ -10,27 +10,26 @@ namespace DiamondKataTests
 {
     public class DiamondGeneratorTests
     {
-        private List<string> diamondA;
-        private List<string> diamondC;
-        private List<string> diamondE;
-        private List<string> diamondZ;
         private DiamondGenerator sut;
-        private ExpectedDiamondSetup expectedDiamondSetup;
 
         [SetUp]
         public void Setup()
         {
-            expectedDiamondSetup = new ExpectedDiamondSetup();
-            diamondA = expectedDiamondSetup.GetDiamondA();
-            diamondC = expectedDiamondSetup.GetDiamondC();
-            diamondE = expectedDiamondSetup.GetDiamondE();
-            diamondZ = expectedDiamondSetup.GetDiamondZ();
-            
             var consoleReader = new ConsoleReader();
             sut = new DiamondGenerator(consoleReader);
         }
 
-        [Test]
+        private static List<(char, List<string>)> GetTestData()
+        {
+            return new List<(char,  List<string>)> 
+            {
+                new ('A', TestDataSetup.GetDiamondA()), 
+                new ('C', TestDataSetup.GetDiamondC()), 
+                new ('E', TestDataSetup.GetDiamondE()), 
+                new ('Z', TestDataSetup.GetDiamondZ())   
+            };
+        }
+
         [TestCase('!')]
         [TestCase('&')]
         [TestCase('*')]
@@ -46,7 +45,6 @@ namespace DiamondKataTests
             act.Should().Throw<ArgumentException>().Where(x => x.Message.Equals($"Invalid entry: {selectedChar}"));
         }
 
-        [Test]
         [TestCase('D')]
         [TestCase('A')]
         [TestCase('V')]
@@ -62,7 +60,6 @@ namespace DiamondKataTests
             result.Should().BeOfType<List<string>>();
         }
 
-        [Test]
         [TestCase('s')]
         [TestCase('t')]
         [TestCase('a')]
@@ -78,7 +75,6 @@ namespace DiamondKataTests
             result.Should().BeOfType<List<string>>();
         }
 
-        [Test]
         [TestCase('P', 'p')]
         [TestCase('Q', 'q')]
         [TestCase('R', 'r')]
@@ -95,55 +91,18 @@ namespace DiamondKataTests
             upperCaseResult.Should().BeEquivalentTo(lowerCaseResult);
         }
 
-        [Test]
-        public void GenerateReturns_Correct_List_Of_Strings_When_A_Entered()
+        [TestCaseSource(nameof(GetTestData))]
+        public void GenerateReturns_Correct_List_Of_Strings_For_SelectedCharacter((char selectedCharacter, List<string> expectedDiamond) testData)
         {
             // Arrange
 
             // Act
-            var result = sut.Generate('A');
+            var result = sut.Generate(testData.selectedCharacter);
 
             // Assert
-            result.Should().BeEquivalentTo(diamondA);
+            result.Should().BeEquivalentTo(testData.expectedDiamond);
         }
-
-        [Test]
-        public void GenerateReturns_Correct_List_Of_Strings_When_C_Entered()
-        {
-            // Arrange
-
-            // Act
-            var result = sut.Generate('C');
-
-            // Assert
-            result.Should().BeEquivalentTo(diamondC);
-        }
-
-        [Test]
-        public void GenerateReturns_Correct_List_Of_Strings_When_E_Entered()
-        {
-            // Arrange
-
-            // Act
-            var result = sut.Generate('E');
-
-            // Assert
-            result.Should().BeEquivalentTo(diamondE);
-        }
-
-        [Test]
-        public void GenerateReturns_Correct_List_Of_Strings_When_Z_Entered()
-        {
-            // Arrange
-
-            // Act
-            var result = sut.Generate('Z');
-
-            // Assert
-            result.Should().BeEquivalentTo(diamondZ);
-        }
-
-        [Test]
+        
         [TestCase('!', null)]
         [TestCase('X', 'X')]
         [TestCase('x', 'x')]
